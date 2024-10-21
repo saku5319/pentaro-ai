@@ -85,7 +85,7 @@
 </head>
 <body>
     <div class="header">
-        <img src="YOUR_IMAGE_URL" alt="ぺんたろうAIの画像"> <!-- ここに画像のURLを入れてください -->
+        <img src="9B05EF7F-C4DB-48E9-A1FE-8939DCEF4909.jpeg" alt="ぺんたろうAIの画像"> <!-- ここに画像のURLを入れてください -->
         <div>
             <h1>ぺんたろうAI</h1>
             <small>ベータ版</small>
@@ -107,7 +107,8 @@
                 addMessage(input + 'ぺん', 'user');
                 
                 try {
-                    const response = await fetch('https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distil', {
+                    const response = await fetch('https://api-inference.huggingface.co/models/facebook/blenderbot-400M', {
+
                         method: 'POST',
                         headers: {
                             'Authorization': `Bearer ${apiKey}`,
