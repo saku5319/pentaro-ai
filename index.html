@@ -68,11 +68,9 @@
         const input = document.getElementById('userInput').value;
 
         if (input) {
-            // ユーザーのメッセージを表示
             chatDiv.innerHTML += `<div>あなた: ${input}</div>`;
             document.getElementById('userInput').value = '';
 
-            // APIリクエストを送信
             try {
                 const response = await fetch('https://api-inference.huggingface.co/models/gpt2', {
                     method: 'POST',
@@ -84,26 +82,23 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error('APIエラー');
+                    const errorMessage = await response.text();
+                    throw new Error(`APIエラー: ${errorMessage}`);
                 }
 
                 const data = await response.json();
                 const aiResponse = data[0]?.generated_text || '応答が得られませんでしたぺん。';
                 
-                // 余計な「ぺん」を取り除いて表示
                 const formattedResponse = aiResponse.endsWith('ぺん。') ? aiResponse : `${aiResponse}ぺん。`;
-                
-                // AIの応答を表示
                 chatDiv.innerHTML += `<div>AI: ${formattedResponse}</div>`;
             } catch (error) {
-                chatDiv.innerHTML += `<div>エラーが発生しましたぺん。</div>`;
+                chatDiv.innerHTML += `<div>エラーが発生しました: ${error.message}ぺん。</div>`;
             }
             
-            // スクロールを下に移動
             chatDiv.scrollTop = chatDiv.scrollHeight;
         }
     });
 </script>
-<center><small>APIテスト</small></center>
+
 </body>
 </html>
