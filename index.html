@@ -83,11 +83,18 @@
                     body: JSON.stringify({ inputs: input })
                 });
 
+                if (!response.ok) {
+                    throw new Error('APIエラー');
+                }
+
                 const data = await response.json();
                 const aiResponse = data[0]?.generated_text || '応答が得られませんでしたぺん。';
                 
+                // 余計な「ぺん」を取り除いて表示
+                const formattedResponse = aiResponse.endsWith('ぺん。') ? aiResponse : `${aiResponse}ぺん。`;
+                
                 // AIの応答を表示
-                chatDiv.innerHTML += `<div>AI: ${aiResponse}ぺん。</div>`;
+                chatDiv.innerHTML += `<div>AI: ${formattedResponse}</div>`;
             } catch (error) {
                 chatDiv.innerHTML += `<div>エラーが発生しましたぺん。</div>`;
             }
@@ -97,6 +104,6 @@
         }
     });
 </script>
-
+<center><small>APIテスト</small></center>
 </body>
 </html>
